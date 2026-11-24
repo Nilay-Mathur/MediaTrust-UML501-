@@ -22,7 +22,7 @@ class Settings(BaseSettings):
     MODELS_DIR: Path = BASE_DIR / "models" / "checkpoints"
 
     # Database
-    DATABASE_URL: str = f"sqlite:///{str((BASE_DIR / 'mediatrust.db').resolve()).replace('\\', '/')}"
+    DATABASE_URL: str = "sqlite:///" + (BASE_DIR / "mediatrust.db").resolve().as_posix()
 
     # Risk Engine Thresholds (0-100)
     RISK_THRESHOLD_LOW: int = 30

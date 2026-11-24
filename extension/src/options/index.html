@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MediaTrust Extension Settings</title>
+  <style>
+    body {
+      max-width: 600px;
+      margin: 40px auto;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      padding: 24px;
+    }
+    .card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    h1 { font-size: 18px; font-weight: 700; margin-bottom: 4px; }
+    p.subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    label { display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 6px; }
+    input[type="text"], input[type="number"] {
+      width: 100%;
+      padding: 8px 12px;
+      font-size: 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      box-sizing: border-box;
+    }
+    .checkbox-group {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .checkbox-group input { width: 16px; height: 16px; }
+    .checkbox-group label { margin-bottom: 0; font-weight: 500; cursor: pointer; }
+    button {
+      background: #0284c7;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    button:hover { background: #0369a1; }
+    .status-msg {
+      margin-top: 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #10b981;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>MediaTrust Extension Settings</h1>
+    <p class="subtitle">Configure local/remote backend endpoints and real-time social video monitor preferences.</p>
+
+    <div class="form-group">
+      <label for="backend-url">Backend REST API Endpoint</label>
+      <input type="text" id="backend-url" placeholder="http://127.0.0.1:8000/api/v1">
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="auto-monitor">
+      <label for="auto-monitor">Enable Real-Time Reel & Video Safety Observer</label>
+    </div>
+
+    <div class="checkbox-group">
+      <input type="checkbox" id="hide-low-risk">
+      <label for="hide-low-risk">Mute routine clean (Low Risk) notifications to minimize distraction</label>
+    </div>
+
+    <div class="form-group">
+      <label for="debounce-ms">Feed Scroll Debounce Delay (ms)</label>
+      <input type="number" id="debounce-ms" min="500" max="5000" step="100">
+      <span style="font-size: 11px; color: #94a3b8;">Prevents triggering analysis while user is quickly scrolling past videos.</span>
+    </div>
+
+    <button id="btn-save">Save Settings</button>
+    <div class="status-msg" id="status-msg">✓ Settings saved successfully.</div>
+  </div>
+
+  <script src="options.js"></script>
+</body>
+</html>

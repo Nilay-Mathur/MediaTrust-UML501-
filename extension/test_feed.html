@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MediaTrust Test Social Video Feed</title>
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .header {
+      max-width: 500px;
+      text-align: center;
+      margin-bottom: 24px;
+    }
+    .reel-container {
+      width: 360px;
+      height: 640px;
+      background: #111;
+      border: 1px solid #333;
+      border-radius: 16px;
+      margin-bottom: 40px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    video {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 1;
+    }
+    .overlay-text {
+      position: relative;
+      z-index: 2;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+      padding: 12px;
+      border-radius: 10px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .tag {
+      font-size: 11px;
+      font-weight: 700;
+      color: #38bdf8;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h2>MediaTrust Extension Social Reel Feed Test Environment</h2>
+    <p style="font-size: 13px; color: #aaa;">
+      Scroll down through the simulated feed. The MediaTrust extension content script's IntersectionObserver will automatically detect the active visible video and evaluate content risk in the bottom-right corner!
+    </p>
+  </div>
+
+  <!-- Reel 1: Suspicious Crypto Scam Message -->
+  <div class="reel-container" role="article" id="reel-1">
+    <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4" muted loop autoplay playsinline crossorigin="anonymous"></video>
+    <div class="overlay-text">
+      <div class="tag">@crypto_wealth_guru</div>
+      <p>
+        URGENT: Invest now in our automated AI trading bot and earn guaranteed 20% daily returns! Send $500 Bitcoin to our VIP wallet immediately to secure your spot. Limited to first 50 users! Click link in bio: <a href="http://crypto-doubler-free-gift.xyz/claim" style="color: #38bdf8;">crypto-doubler-free-gift.xyz</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- Reel 2: Benign Nature & Travel Vlog -->
+  <div class="reel-container" role="article" id="reel-2">
+    <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4" muted loop autoplay playsinline crossorigin="anonymous"></video>
+    <div class="overlay-text">
+      <div class="tag">@wanderlust_explorers</div>
+      <p>
+        Exploring the Swiss Alps during autumn! The hiking trail from Grindelwald to First was breathtaking. Highly recommend packing waterproof hiking boots and warm coffee. #travel #nature #hiking
+      </p>
+    </div>
+  </div>
+
+  <!-- Reel 3: AI-Generated Synthetic Media Demo -->
+  <div class="reel-container" role="article" id="reel-3">
+    <video src="https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyBlazes.mp4" muted loop autoplay playsinline crossorigin="anonymous"></video>
+    <div class="overlay-text">
+      <div class="tag">@synthetic_ai_art</div>
+      <p>
+        Full AI generated cinematic landscape created with Sora and Runway Gen-3! Notice the surreal lighting transitions and synthetic texture interpolation. What do you think of generative AI video? #aivideo #generative #sora #deepfake
+      </p>
+    </div>
+  </div>
+</body>
+</html>

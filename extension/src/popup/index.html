@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>MediaTrust Security Popup</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      width: 340px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      color: #0f172a;
+      padding: 16px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .shield-icon {
+      width: 22px;
+      height: 22px;
+      background: #0284c7;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 11px;
+    }
+    .status-badge {
+      font-size: 11px;
+      padding: 3px 8px;
+      border-radius: 9999px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: #e2e8f0;
+      color: #475569;
+    }
+    .status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #94a3b8;
+    }
+    .status-dot.online { background: #10b981; }
+    .status-dot.offline { background: #ef4444; }
+
+    .site-card {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin-bottom: 12px;
+      font-size: 12px;
+    }
+    .site-host {
+      font-weight: 600;
+      color: #0f172a;
+      word-break: break-all;
+    }
+
+    .btn-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    button {
+      width: 100%;
+      padding: 9px 12px;
+      border-radius: 6px;
+      border: 1px solid #cbd5e1;
+      background: white;
+      color: #1e293b;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    button:hover { background: #f1f5f9; }
+    button.primary {
+      background: #0284c7;
+      color: white;
+      border-color: #0284c7;
+    }
+    button.primary:hover { background: #0369a1; }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    .result-box {
+      display: none;
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 12px;
+      font-size: 12px;
+      margin-top: 8px;
+    }
+    .result-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 6px;
+    }
+    .result-score {
+      font-weight: 700;
+      font-size: 12px;
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
+    .media-verdict {
+      margin: 0 0 8px;
+      padding: 7px 8px;
+      border-radius: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      line-height: 1.4;
+    }
+    .media-verdict.ai-signal { background: #e0f2fe; color: #075985; border: 1px solid #bae6fd; }
+    .media-verdict.no-signal { background: #f1f5f9; color: #475569; border: 1px solid #e2e8f0; }
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 8px;
+      font-size: 11px;
+      color: #64748b;
+    }
+    .footer a {
+      color: #0284c7;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="brand">
+      <div class="shield-icon">MT</div>
+      <span>MediaTrust</span>
+    </div>
+    <div class="status-badge" id="status-badge">
+      <span class="status-dot" id="status-dot"></span>
+      <span id="status-text">Connecting...</span>
+    </div>
+  </div>
+
+  <div class="site-card">
+    <div style="font-size: 10px; color: #64748b; text-transform: uppercase; font-weight: 600;">Active Page Host</div>
+    <div class="site-host" id="active-host">Inspecting tab...</div>
+  </div>
+
+  <div class="btn-group">
+    <button class="primary" id="btn-analyze-page">
+      Inspect Current Page
+    </button>
+    <button id="btn-analyze-reel">
+      Check Active Video / Reel
+    </button>
+  </div>
+
+  <div class="result-box" id="result-box">
+    <div class="result-header">
+      <span style="font-weight: 700;" id="res-risk-label">Analysis Result</span>
+      <span class="result-score" id="res-score-badge">--/100</span>
+    </div>
+    <div class="media-verdict" id="res-media-verdict" hidden></div>
+    <p style="color: #475569; font-size: 11px; line-height: 1.4;" id="res-summary"></p>
+    <div style="margin-top: 8px; text-align: right;">
+      <a id="btn-full-report" style="color: #0284c7; font-size: 11px; font-weight: 600; text-decoration: none;" target="_blank">
+        Open Detailed Audit Report →
+      </a>
+    </div>
+  </div>
+
+  <div class="footer">
+    <a id="link-options">Settings & Privacy</a>
+    <span>v1.0.4</span>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

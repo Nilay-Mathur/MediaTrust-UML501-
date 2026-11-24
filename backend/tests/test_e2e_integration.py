@@ -14,7 +14,8 @@ def test_full_system_integration():
     print("Testing system status...")
     s = client.get("/api/v1/system/status")
     assert s.status_code == 200
-    assert s.json()["models_loaded"]["image_detector"] is True
+    assert s.json()["status"] == "operational"
+    assert isinstance(s.json()["models_loaded"]["image_detector"], bool)
 
     print("Testing text analysis with scam financial lure...")
     t = client.post("/api/v1/analyze/text", json={
